@@ -49,7 +49,7 @@ spec:
           main:
             image:
               repository: ghcr.io/linuxserver/speedtest-tracker
-              tag: 0.21.2@sha256:7042d0d788e3fc09179f4ad445730fbe52cf73385ed80d52153ee7a2cbfcc28d
+              tag: 0.21.2@sha256:e94a055ad8e5c4315042d6578a7936472ced60a1c39ce89c44fa6e8e397f4dfe
             envFrom: *envFrom
             env:
               SPEEDTEST_SCHEDULE: 0 * * * *
