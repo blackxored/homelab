@@ -18,4 +18,4 @@ resources:
   - ./invidious/ks.yaml
   - ./ntfy/ks.yaml
   - ./atuin/ks.yaml
-  - ./piped/ks.yaml
+#  - ./piped/ks.yaml
