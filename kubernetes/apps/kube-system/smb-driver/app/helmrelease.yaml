@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: csi-driver-smb
-      version: "v1.16.0" # You can specify the version based on your requirements
+      version: "v1.17.0" # You can specify the version based on your requirements
       sourceRef:
         kind: HelmRepository
         name: csi-driver-smb
