@@ -44,7 +44,7 @@ spec:
           inv-sig-helper:
             image:
               repository: quay.io/invidious/inv-sig-helper
-              tag: latest@sha256:cd40f9bc62a809e6449b194c99c0cc908115585f014927e8e71ff803780ee0a4
+              tag: latest@sha256:646c7b2a0e106ef44fc65bf8e4f3325ef6d4a01f2581c27b1d3181a830e75557
               pullPolicy: IfNotPresent
             command: ["/app/inv_sig_helper_rust", "--tcp", "0.0.0.0:12999"]
             env:
