@@ -12,6 +12,7 @@
     nixpkgs,
     flake-utils,
     talhelper,
+    self,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (
@@ -20,9 +21,6 @@
       in {
         devShells.default = pkgs.mkShell {
           packages = [
-            (pkgs.python313.withPackages (p: [
-              p.pipx
-            ]))
             pkgs.mise
             pkgs.talosctl
             pkgs.kubectl
@@ -38,10 +36,10 @@
             pkgs.kubeconform
             pkgs.kustomize
             talhelper.packages.${system}.default
-          ];
-          env.LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-            pkgs.stdenv.cc.cc.lib
-            pkgs.zlib
+            pkgs.helmfile
+            pkgs.yq
+            pkgs.kubernetes-helm
+            pkgs.cilium-cli
           ];
         };
       }
