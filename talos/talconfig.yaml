@@ -1,0 +1,112 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://10.26.28.2:6443
+additionalApiServerCertSans: &sans
+  - "127.0.0.1"
+  - "10.26.28.2"
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "garuda"
+    ipAddress: "10.26.28.10"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "bc:24:11:e7:9d:8c"
+        dhcp: false
+        addresses:
+          - "10.26.28.10/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.26.28.1"
+        mtu: 1500
+        vip:
+          ip: "10.26.28.2"
+  - hostname: "ifrit-01"
+    ipAddress: "10.26.28.11"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "bc:24:11:ea:43:91"
+        dhcp: false
+        addresses:
+          - "10.26.28.11/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.26.28.1"
+        mtu: 1500
+        vip:
+          ip: "10.26.28.2"
+  - hostname: "ifrit-02"
+    ipAddress: "10.26.28.12"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "bc:24:11:82:e5:f3"
+        dhcp: false
+        addresses:
+          - "10.26.28.12/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.26.28.1"
+        mtu: 1500
+        vip:
+          ip: "10.26.28.2"
+  - hostname: "ifrit-03"
+    ipAddress: "10.26.28.13"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "bc:24:11:9b:42:60"
+        dhcp: false
+        addresses:
+          - "10.26.28.13/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.26.28.1"
+        mtu: 1500
+        vip:
+          ip: "10.26.28.2"
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/admission-controller-patch.yaml"
+    - "@./patches/controller/cluster.yaml"
+
