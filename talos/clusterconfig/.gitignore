@@ -1,0 +1,5 @@
+kubernetes-garuda.yaml
+kubernetes-ifrit-01.yaml
+kubernetes-ifrit-02.yaml
+kubernetes-ifrit-03.yaml
+talosconfig
